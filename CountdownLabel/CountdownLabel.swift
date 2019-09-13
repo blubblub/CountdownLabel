@@ -41,6 +41,8 @@ public class CountdownLabel: LTMorphingLabel {
         return df
     }
     
+    public var dateComponentsFormatter: DateComponentsFormatter?
+    
     public var timeCounted: TimeInterval {
         let timeCounted = NSDate().timeIntervalSince(fromDate as Date)
         return round(timeCounted < 0 ? 0 : timeCounted)
@@ -301,6 +303,10 @@ extension CountdownLabel {
         let calendar = Calendar.init(identifier: .gregorian);
         var labelText = timeFormat;
         let comp = calendar.dateComponents([.day, .hour, .minute, .second], from: date1970 as Date, to: to1970Date)
+        
+        if let formatter = dateComponentsFormatter, let text = formatter.string(from: comp) {
+            return text
+        }
         
         if let day = comp.day ,let _ = timeFormat.range(of: "dd"){
             labelText = labelText.replacingOccurrences(of: "dd", with: String.init(format: "%02ld", day))
