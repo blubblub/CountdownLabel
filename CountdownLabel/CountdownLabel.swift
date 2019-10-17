@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LTMorphingLabel
 
 @objc public protocol CountdownLabelDelegate {
     @objc optional func countdownStarted()
@@ -29,7 +30,7 @@ public class CountdownLabel: LTMorphingLabel {
     internal let defaultFireInterval = 1.0
     internal let date1970 = NSDate(timeIntervalSince1970: 0)
     
-    // conputed property
+    // computed property
     public var dateFormatter: DateFormatter {
         let df = DateFormatter()
         df.locale = Locale(identifier: "en_US_POSIX")

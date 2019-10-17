@@ -279,7 +279,7 @@ class CountdownLabelExampleTests: XCTestCase {
         label.setCountDownTime(minutes: 10)
         label.countdownAttributedText = CountdownAttributedText(text: "HELLO TIME IS HERE NOW",
             replacement: "HERE",
-            attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+            attributes: [.foregroundColor: UIColor.red])
         label.start()
         
         XCTAssertEqual(label.attributedText!.string, "HELLO TIME IS 00:00:10 NOW")
@@ -292,7 +292,7 @@ class CountdownLabelExampleTests: XCTestCase {
 
         label.countdownAttributedText = CountdownAttributedText(text: "HELLO TIME IS HERE NOW",
             replacement: "HERE",
-            attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+            attributes: [.foregroundColor: UIColor.red])
         label.start()
         
         
@@ -359,12 +359,9 @@ class CountdownLabelExampleTests: XCTestCase {
         XCTAssertEqual(label.morphingEnabled, false)
     }
     
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                dispatch_time_t(DISPATCH_TIME_NOW),
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(delay: Double, closure: @escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            closure()
+        }
     }
 }
